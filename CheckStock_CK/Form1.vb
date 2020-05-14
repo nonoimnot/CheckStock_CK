@@ -9,6 +9,7 @@ Public Class Form1
     Dim Da As MySqlDataAdapter = New MySqlDataAdapter()
     Public Itc As New ArrayList()
     Public Item_array As New ArrayList()
+    'Test for GitHub'
 
 
     Public Sub CheckNumber(sender As Object, e As KeyPressEventArgs)
