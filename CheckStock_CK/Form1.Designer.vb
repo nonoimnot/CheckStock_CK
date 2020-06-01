@@ -64,6 +64,7 @@ Partial Class Form1
         Me.lb_RowNo_Completed = New System.Windows.Forms.Label()
         Me.Timer_check_redundancy = New System.Windows.Forms.Timer(Me.components)
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
+        Me.Bt_change_update_mode = New System.Windows.Forms.Button()
         Me.Tab_Control.SuspendLayout()
         Me.Tab_PreOr.SuspendLayout()
         CType(Me.Dgv_Preorder, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -205,6 +206,7 @@ Partial Class Form1
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Dgv_Preorder.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
+        Me.Dgv_Preorder.RowHeadersWidth = 51
         DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.Dgv_Preorder.RowsDefaultCellStyle = DataGridViewCellStyle3
         Me.Dgv_Preorder.Size = New System.Drawing.Size(1008, 406)
@@ -213,6 +215,7 @@ Partial Class Form1
         'chk_pre
         '
         Me.chk_pre.HeaderText = "##"
+        Me.chk_pre.MinimumWidth = 6
         Me.chk_pre.Name = "chk_pre"
         Me.chk_pre.Width = 27
         '
@@ -237,6 +240,7 @@ Partial Class Form1
         '
         'Tab_Order
         '
+        Me.Tab_Order.Controls.Add(Me.Bt_change_update_mode)
         Me.Tab_Order.Controls.Add(Me.Bt_Del_Or)
         Me.Tab_Order.Controls.Add(Me.Lb_OrderRows)
         Me.Tab_Order.Controls.Add(Me.Bt_update_Order)
@@ -296,6 +300,7 @@ Partial Class Form1
         Me.Dgv_Order.Location = New System.Drawing.Point(8, 39)
         Me.Dgv_Order.Margin = New System.Windows.Forms.Padding(4)
         Me.Dgv_Order.Name = "Dgv_Order"
+        Me.Dgv_Order.RowHeadersWidth = 51
         DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.Dgv_Order.RowsDefaultCellStyle = DataGridViewCellStyle5
         Me.Dgv_Order.Size = New System.Drawing.Size(1008, 406)
@@ -305,6 +310,7 @@ Partial Class Form1
         '
         Me.chk.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.chk.HeaderText = "##"
+        Me.chk.MinimumWidth = 6
         Me.chk.Name = "chk"
         Me.chk.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         Me.chk.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
@@ -369,6 +375,7 @@ Partial Class Form1
         Me.Dgv_Received.Margin = New System.Windows.Forms.Padding(4)
         Me.Dgv_Received.MultiSelect = False
         Me.Dgv_Received.Name = "Dgv_Received"
+        Me.Dgv_Received.RowHeadersWidth = 51
         DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.Dgv_Received.RowsDefaultCellStyle = DataGridViewCellStyle7
         Me.Dgv_Received.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
@@ -425,6 +432,7 @@ Partial Class Form1
         Me.Dgv_Completed.Margin = New System.Windows.Forms.Padding(4)
         Me.Dgv_Completed.MultiSelect = False
         Me.Dgv_Completed.Name = "Dgv_Completed"
+        Me.Dgv_Completed.RowHeadersWidth = 51
         DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.Dgv_Completed.RowsDefaultCellStyle = DataGridViewCellStyle9
         Me.Dgv_Completed.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
@@ -434,6 +442,7 @@ Partial Class Form1
         'chk_completed
         '
         Me.chk_completed.HeaderText = "##"
+        Me.chk_completed.MinimumWidth = 6
         Me.chk_completed.Name = "chk_completed"
         Me.chk_completed.Width = 30
         '
@@ -455,6 +464,15 @@ Partial Class Form1
         'FolderBrowserDialog1
         '
         Me.FolderBrowserDialog1.RootFolder = System.Environment.SpecialFolder.MyComputer
+        '
+        'Bt_change_update_mode
+        '
+        Me.Bt_change_update_mode.Location = New System.Drawing.Point(8, 7)
+        Me.Bt_change_update_mode.Name = "Bt_change_update_mode"
+        Me.Bt_change_update_mode.Size = New System.Drawing.Size(110, 28)
+        Me.Bt_change_update_mode.TabIndex = 5
+        Me.Bt_change_update_mode.Text = "Normal Mode"
+        Me.Bt_change_update_mode.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -517,4 +535,5 @@ Partial Class Form1
     Friend WithEvents Bt_Del_Completed As Button
     Friend WithEvents Tb_Folder_GenCsv As TextBox
     Friend WithEvents FolderBrowserDialog1 As FolderBrowserDialog
+    Friend WithEvents Bt_change_update_mode As Button
 End Class
