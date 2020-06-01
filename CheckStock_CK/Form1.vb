@@ -9,6 +9,7 @@ Public Class Form1
     Dim Da As MySqlDataAdapter = New MySqlDataAdapter()
     Public Itc As New ArrayList()
     Public Item_array As New ArrayList()
+    Public Order_insert_mode As Boolean = True
     'Test for GitHub'
 
 
@@ -582,4 +583,28 @@ Public Class Form1
         Next
     End Sub
 
+    Private Sub Bt_change_update_mode_Click(sender As Object, e As EventArgs) Handles Bt_change_update_mode.Click
+
+        If Order_insert_mode = True Then
+            Bt_change_update_mode.Text = "Quick Mode"
+            Bt_update_Order.Visible = False
+            Bt_GenCsv_QuickMode.Visible = True
+            TB_Folder_GenCsv_QuickMode.Visible = True
+        Else
+            Bt_change_update_mode.Text = "Normal Mode"
+            Bt_update_Order.Visible = True
+            Bt_GenCsv_QuickMode.Visible = False
+            TB_Folder_GenCsv_QuickMode.Visible = False
+        End If
+        Order_insert_mode = Not Order_insert_mode
+
+    End Sub
+
+    Private Sub TB_Folder_GenCsv_QuickMode_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles TB_Folder_GenCsv_QuickMode.MouseDoubleClick
+        FolderBrowserDialog1.Description = "เลือกโพเดอร์ที่จะส่งไฟล์ออก"
+        FolderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyComputer
+        FolderBrowserDialog1.ShowNewFolderButton = True
+        FolderBrowserDialog1.ShowDialog()
+        TB_Folder_GenCsv_QuickMode.Text = FolderBrowserDialog1.SelectedPath() & "\Orderfile.csv"
+    End Sub
 End Class
