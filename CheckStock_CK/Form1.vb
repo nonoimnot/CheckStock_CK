@@ -172,7 +172,7 @@ Public Class Form1
         Dgv_Order.Columns.Item(2).Visible = True
         Dgv_Order.Columns.Item(3).ReadOnly = True
         Dgv_Order.Columns.Item(4).ReadOnly = True
-        Dgv_Order.Columns.Item(5).ReadOnly = True
+        Dgv_Order.Columns.Item(5).ReadOnly = False
         Dgv_Order.Columns.Item(6).ReadOnly = True
         Dgv_Order.Columns.Item(7).ReadOnly = False
         Dgv_Order.Columns.Item(8).ReadOnly = True
@@ -606,5 +606,52 @@ Public Class Form1
         FolderBrowserDialog1.ShowNewFolderButton = True
         FolderBrowserDialog1.ShowDialog()
         TB_Folder_GenCsv_QuickMode.Text = FolderBrowserDialog1.SelectedPath() & "\Orderfile.csv"
+    End Sub
+
+    Private Sub Bt_GenCsv_QuickMode_Click(sender As Object, e As EventArgs) Handles Bt_GenCsv_QuickMode.Click
+        Dim filePath As String
+        Dim delimeter As String = ","
+        Dim sb As New StringBuilder
+        Dim chk As Boolean
+        Dim vQty As Integer
+        Dim count As Integer = 0
+
+        For i = 0 To Dgv_Order.Rows.Count - 2
+            chk = Dgv_Order(0, i).Value
+            If chk = True Then
+                'Update_Or_Parts(Dgv_Order(1, i).Value, vQty, "03")
+                count += 1
+            End If
+        Next
+
+        Dim array As String() = New String(count) {}
+        'Button1_Click(Nothing, Nothing)
+
+        For i As Integer = 0 To Dgv_Order.Rows.Count - 2
+            vQty = Dgv_Order(7, i).Value
+            chk = Dgv_Order(0, i).Value
+            If chk = True Then
+                array(0) = Dgv_Order(2, i).Value.ToString
+                array(1) = Dgv_Order(7, i).Value.ToString
+                array(2) = Dgv_Order(5, i).Value.ToString
+                If Not Dgv_Order.Rows(i).IsNewRow Then
+                    sb.AppendLine(String.Join(delimeter, array))
+                End If
+                Update_Or_Parts(Dgv_Order(1, i).Value, vQty, "04")
+            End If
+
+        Next
+        Try
+            filePath = TB_Folder_GenCsv_QuickMode.Text
+            File.WriteAllText(filePath, sb.ToString)
+            MessageBox.Show("Orderfile.csv Ready")
+            'Opens the file immediately after writing
+            'Process.Start(filePath)
+            'Update_Completed()
+        Catch ex As Exception
+            MessageBox.Show("Something Wrong in Write File Process !!")
+            TB_Folder_GenCsv_QuickMode_MouseDoubleClick(sender, e)
+        End Try
+        Button1_Click(Nothing, Nothing)
     End Sub
 End Class
