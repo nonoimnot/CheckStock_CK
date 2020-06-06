@@ -22,10 +22,10 @@ Partial Class Form3
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Dgv_CheckStock = New System.Windows.Forms.DataGridView()
         Me.chk = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.cobo_vender = New System.Windows.Forms.DataGridViewComboBoxColumn()
@@ -44,6 +44,8 @@ Partial Class Form3
         Me.cb_dgv_vender1 = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.Lb_Row_Cs1 = New System.Windows.Forms.Label()
         Me.Bt_ChangeMode = New System.Windows.Forms.Button()
+        Me.Cb_vender_vdmode = New System.Windows.Forms.ComboBox()
+        Me.Bt_Select_Vender = New System.Windows.Forms.Button()
         CType(Me.Dgv_CheckStock, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Nd_Offset, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dgv_CheckStock1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -51,14 +53,14 @@ Partial Class Form3
         '
         'Dgv_CheckStock
         '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Dgv_CheckStock.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Dgv_CheckStock.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Dgv_CheckStock.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.Dgv_CheckStock.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.chk, Me.cobo_vender})
         Me.Dgv_CheckStock.EnableHeadersVisualStyles = False
@@ -67,8 +69,8 @@ Partial Class Form3
         Me.Dgv_CheckStock.MultiSelect = False
         Me.Dgv_CheckStock.Name = "Dgv_CheckStock"
         Me.Dgv_CheckStock.RowHeadersWidth = 51
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Dgv_CheckStock.RowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.Dgv_CheckStock.RowsDefaultCellStyle = DataGridViewCellStyle10
         Me.Dgv_CheckStock.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.Dgv_CheckStock.Size = New System.Drawing.Size(1328, 416)
         Me.Dgv_CheckStock.TabIndex = 0
@@ -185,14 +187,14 @@ Partial Class Form3
         '
         'Dgv_CheckStock1
         '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Dgv_CheckStock1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        DataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Dgv_CheckStock1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle11
         Me.Dgv_CheckStock1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.Dgv_CheckStock1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewCheckBoxColumn1, Me.cb_dgv_vender1})
         Me.Dgv_CheckStock1.EnableHeadersVisualStyles = False
@@ -201,8 +203,8 @@ Partial Class Form3
         Me.Dgv_CheckStock1.MultiSelect = False
         Me.Dgv_CheckStock1.Name = "Dgv_CheckStock1"
         Me.Dgv_CheckStock1.RowHeadersWidth = 51
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Dgv_CheckStock1.RowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.Dgv_CheckStock1.RowsDefaultCellStyle = DataGridViewCellStyle12
         Me.Dgv_CheckStock1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.Dgv_CheckStock1.Size = New System.Drawing.Size(1058, 416)
         Me.Dgv_CheckStock1.TabIndex = 11
@@ -235,16 +237,37 @@ Partial Class Form3
         '
         Me.Bt_ChangeMode.Location = New System.Drawing.Point(33, 12)
         Me.Bt_ChangeMode.Name = "Bt_ChangeMode"
-        Me.Bt_ChangeMode.Size = New System.Drawing.Size(93, 30)
+        Me.Bt_ChangeMode.Size = New System.Drawing.Size(188, 30)
         Me.Bt_ChangeMode.TabIndex = 13
         Me.Bt_ChangeMode.Text = "Filter Mode"
         Me.Bt_ChangeMode.UseVisualStyleBackColor = True
+        '
+        'Cb_vender_vdmode
+        '
+        Me.Cb_vender_vdmode.FormattingEnabled = True
+        Me.Cb_vender_vdmode.Location = New System.Drawing.Point(33, 63)
+        Me.Cb_vender_vdmode.Name = "Cb_vender_vdmode"
+        Me.Cb_vender_vdmode.Size = New System.Drawing.Size(149, 24)
+        Me.Cb_vender_vdmode.TabIndex = 14
+        Me.Cb_vender_vdmode.Visible = False
+        '
+        'Bt_Select_Vender
+        '
+        Me.Bt_Select_Vender.Location = New System.Drawing.Point(191, 62)
+        Me.Bt_Select_Vender.Name = "Bt_Select_Vender"
+        Me.Bt_Select_Vender.Size = New System.Drawing.Size(75, 28)
+        Me.Bt_Select_Vender.TabIndex = 15
+        Me.Bt_Select_Vender.Text = "Select"
+        Me.Bt_Select_Vender.UseVisualStyleBackColor = True
+        Me.Bt_Select_Vender.Visible = False
         '
         'Form3
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1360, 590)
+        Me.Controls.Add(Me.Bt_Select_Vender)
+        Me.Controls.Add(Me.Cb_vender_vdmode)
         Me.Controls.Add(Me.Bt_ChangeMode)
         Me.Controls.Add(Me.Lb_Row_Cs1)
         Me.Controls.Add(Me.Dgv_CheckStock1)
@@ -290,4 +313,6 @@ Partial Class Form3
     Friend WithEvents cb_dgv_vender1 As DataGridViewComboBoxColumn
     Friend WithEvents Lb_Row_Cs1 As Label
     Friend WithEvents Bt_ChangeMode As Button
+    Friend WithEvents Cb_vender_vdmode As ComboBox
+    Friend WithEvents Bt_Select_Vender As Button
 End Class

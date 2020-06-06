@@ -8,6 +8,7 @@ Public Class Form3
     Dim Ven_Dict As New Dictionary(Of String, String)
     Dim Ven_array As New ArrayList
     Public Item_no As String
+    Public Vender_Select_Mode As Boolean = False
 
     Private Sub Form3_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Cb_Mode.Items.Add("Auto 1")
@@ -235,6 +236,8 @@ Public Class Form3
             cb_dgv_vender1.Items.Add(Ven_array(i))
         Next
     End Sub
+
+
     Private Sub Select_Data1()
         MysqlConn = New MySqlConnection(Cs)
         MysqlConn.Open()
@@ -295,6 +298,7 @@ Public Class Form3
         Lb_Row_CS.Visible = True
         Lb_Row_Cs1.Visible = False
     End Sub
+
     Private Sub Select_Data2()
         MysqlConn = New MySqlConnection(Cs)
         MysqlConn.Open()
@@ -338,6 +342,40 @@ Public Class Form3
 
         Lb_Row_CS.Visible = False
         Lb_Row_Cs1.Visible = True
+    End Sub
+
+    Private Sub Select_Vender_Select(VenderNo As String)
+        MysqlConn = New MySqlConnection(Cs)
+        MysqlConn.Open()
+        'MessageBox.Show("Connection to Database has been opened.")
+        '--------------------- Section Show DataGridView PreOrder Spare Parts ----------------------------
+        Dim sql1 As String = "select ItemCode,ItemDesc,w1_qty,w2_qty,w3_qty,stockqty,'0' as Qty from salesum_update " &
+                            "where (ItemCode in  (SELECT ItemCode FROM test_db.order_spare_parts where VenderNo = @VenderNo group by ItemCode) )" &
+                            "and Itemcode not in (select ItemCode from order_spare_parts where OrderStatusNo = '01' or OrderStatusNo = '02')" &
+                            "and w1_qty + w2_qty + w3_qty >= stockqty - @offValue"
+
+        Dim sql2 As String = "select ItemCode,ItemDesc,w1_qty,w2_qty,w3_qty,stockqty,'0' as Qty from salesum_update " &
+                            "where (ItemCode in  (SELECT ItemCode FROM test_db.order_spare_parts where VenderNo = @VenderNo group by ItemCode) )" &
+                            "and Itemcode not in (select ItemCode from order_spare_parts where OrderStatusNo = '01' or OrderStatusNo = '02')" &
+                            "and stockqty < 1"
+
+        Dim stm As String = sql1 & " Union " & sql2 & " order by ItemDesc"
+
+        'MessageBox.Show(stm)
+
+        Dim cmd As MySqlCommand = New MySqlCommand(stm, MysqlConn)
+
+        cmd.Parameters.Add("@offvalue", MySqlDbType.Int16).Value = Nd_Offset.Value
+        cmd.Parameters.Add("@VenderNo", MySqlDbType.VarChar, 250).Value = VenderNo
+        Da.SelectCommand = cmd
+        Ds.Clear()
+        Da.Fill(Ds, "CheckStock")
+        Dgv_CheckStock.DataSource = Ds.Tables("CheckStock")
+        Dgv_CheckStock1.Visible = False
+        Dgv_CheckStock.Visible = True
+
+        Lb_Row_CS.Visible = True
+        Lb_Row_Cs1.Visible = False
     End Sub
     Private Sub Bt_Fillter_Click(sender As Object, e As EventArgs) Handles Bt_Fillter.Click
         'MessageBox.Show(Cb_Mode.SelectedItem)
@@ -571,5 +609,57 @@ Public Class Form3
         Dim b As Brush = SystemBrushes.ControlText
         ' Draw row number
         e.Graphics.DrawString(rowNumber, dg.Font, b, e.RowBounds.Location.X + 15, e.RowBounds.Location.Y + ((e.RowBounds.Height - size.Height) / 2))
+    End Sub
+
+    Friend Sub Load_Combo_Vender_vdmode()
+        MysqlConn = New MySqlConnection(Cs)
+        MysqlConn.Open()
+        'MessageBox.Show("Connection to Database has been opened.")
+        Dim stm As String = "select VenderNo,VenderDesc from vender"
+        Dim cmd As MySqlCommand = New MySqlCommand(stm, MysqlConn)
+        Dim reader As MySqlDataReader = cmd.ExecuteReader()
+        Dim dt As DataTable = New DataTable
+        'Dim listrow As Short = 0
+        dt.Load(reader)
+        Cb_vender_vdmode.ValueMember = "VenderNo"
+        Cb_vender_vdmode.DisplayMember = "VenderDesc"
+        Cb_vender_vdmode.DataSource = dt
+        reader.Close()
+
+    End Sub
+
+    Private Sub Bt_ChangeMode_Click(sender As Object, e As EventArgs) Handles Bt_ChangeMode.Click
+        If Vender_Select_Mode = False Then
+            'Combo_Select_Vender_Set()
+            Load_Combo_Vender_vdmode()
+            Cb_vender_vdmode.Visible = True
+            Bt_Select_Vender.Visible = True
+            Bt_ChangeMode.Text = "Vender Select Mode"
+            Vender_Select_Mode = True
+
+            Lb_fillter.Visible = False
+            tb_search.Visible = False
+            Bt_Fillter.Visible = False
+        Else
+            Cb_vender_vdmode.Visible = False
+            Bt_Select_Vender.Visible = False
+            Bt_ChangeMode.Text = "Filter Mode"
+            Vender_Select_Mode = False
+
+            Lb_fillter.Visible = True
+            tb_search.Visible = True
+            Bt_Fillter.Visible = True
+        End If
+
+
+    End Sub
+
+    Private Sub Bt_Select_Vender_Click(sender As Object, e As EventArgs) Handles Bt_Select_Vender.Click
+        Dim VenderNo As String = Cb_vender_vdmode.SelectedValue
+        MessageBox.Show(VenderNo)
+        Select_Vender_Select(VenderNo)
+        Prepare_DataGrid1()
+        Show_Row_No()
+        Cb_Vender.Visible = True
     End Sub
 End Class
