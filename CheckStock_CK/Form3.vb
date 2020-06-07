@@ -11,14 +11,9 @@ Public Class Form3
     Public Vender_Select_Mode As Boolean = False
 
     Private Sub Form3_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Cb_Mode.Items.Add("Auto 1")
-        Cb_Mode.Items.Add("Auto 1-1")
-        Cb_Mode.Items.Add("Auto 2")
-        Cb_Mode.Items.Add("Auto 2-1")
-        Cb_Mode.Items.Add("Manual")
-        Cb_Mode.Items.Add("Manual-1")
 
-        Cb_Mode.SelectedItem = "Auto 1"
+        Cb_Mode_Setup()
+        Cb_VenderSelect_Mode_Setup()
         MysqlConn = New MySqlConnection(Cs)
         MysqlConn.Open()
         'MessageBox.Show("Connection to Database has been opened.")
@@ -55,6 +50,28 @@ Public Class Form3
         Dgv_CheckStock.Visible = True
         Prepare_DataGrid1()
         Show_Row_No()
+    End Sub
+
+    Private Sub Cb_Mode_Setup()
+
+        Cb_Mode.Items.Add("Auto 1")
+        Cb_Mode.Items.Add("Auto 1-1")
+        Cb_Mode.Items.Add("Auto 2")
+        Cb_Mode.Items.Add("Auto 2-1")
+        Cb_Mode.Items.Add("Manual")
+        Cb_Mode.Items.Add("Manual-1")
+
+        Cb_Mode.SelectedItem = "Auto 1"
+
+    End Sub
+
+    Private Sub Cb_VenderSelect_Mode_Setup()
+
+        Cb_VenderSelect_Mode.Items.Add("Prepare for Redundancy")
+        Cb_VenderSelect_Mode.Items.Add("Allow for Redundancy")
+
+        Cb_VenderSelect_Mode.SelectedItem = "Prepare for Redundancy"
+
     End Sub
 
     Private Sub Insert_Item(ItemNo As String, ItemDesc As String, VenderNo As String, OrQty As Int16)
@@ -357,6 +374,7 @@ Public Class Form3
         Dim sql2 As String = "select code,name1,'0','0','0',qty,'0' as Qty from item " &
                             "where (code in  (SELECT ItemCode FROM test_db.order_spare_parts where VenderNo = @VenderNo group by ItemCode) )" &
                             "and code not in (select ItemCode from order_spare_parts where OrderStatusNo = '01' or OrderStatusNo = '02')" &
+                            "and code not in (select ItemCode from salesum_update)" &
                             "and qty < 1"
 
         Dim stm As String = sql1 & " Union " & sql2 & " order by ItemDesc"
@@ -376,6 +394,41 @@ Public Class Form3
 
         Lb_Row_CS.Visible = True
         Lb_Row_Cs1.Visible = False
+    End Sub
+
+    Private Sub Select_Vender_Select1(VenderNo As String)
+
+        MysqlConn = New MySqlConnection(Cs)
+        MysqlConn.Open()
+        'MessageBox.Show("Connection to Database has been opened.")
+        '--------------------- Section Show DataGridView PreOrder Spare Parts ----------------------------
+        Dim sql1 As String = "select ItemCode,ItemDesc,w1_qty,w2_qty,w3_qty,stockqty,'0' as Qty from salesum_update " &
+                            "where (ItemCode in  (SELECT ItemCode FROM test_db.order_spare_parts where VenderNo = @VenderNo group by ItemCode) )" &
+                            "and w1_qty + w2_qty + w3_qty >= stockqty - @offValue"
+
+        Dim sql2 As String = "select code,name1,'0','0','0',qty,'0' as Qty from item " &
+                            "where (code in  (SELECT ItemCode FROM test_db.order_spare_parts where VenderNo = @VenderNo group by ItemCode) )" &
+                            "and code not in (select ItemCode from salesum_update)" &
+                            "and qty < 1"
+
+        Dim stm As String = sql1 & " Union " & sql2 & " order by ItemDesc"
+
+        'MessageBox.Show(stm)
+
+        Dim cmd As MySqlCommand = New MySqlCommand(stm, MysqlConn)
+
+        cmd.Parameters.Add("@offvalue", MySqlDbType.Int16).Value = Nd_Offset.Value
+        cmd.Parameters.Add("@VenderNo", MySqlDbType.VarChar, 250).Value = VenderNo
+        Da.SelectCommand = cmd
+        Ds.Clear()
+        Da.Fill(Ds, "CheckStock")
+        Dgv_CheckStock.DataSource = Ds.Tables("CheckStock")
+        Dgv_CheckStock1.Visible = False
+        Dgv_CheckStock.Visible = True
+
+        Lb_Row_CS.Visible = True
+        Lb_Row_Cs1.Visible = False
+
     End Sub
     Private Sub Bt_Fillter_Click(sender As Object, e As EventArgs) Handles Bt_Fillter.Click
         'MessageBox.Show(Cb_Mode.SelectedItem)
@@ -642,6 +695,9 @@ Public Class Form3
             Bt_Fillter.Visible = False
             Lb_Mode.Visible = False
             Cb_Mode.Visible = False
+
+            Lb_Mode1.Visible = True
+            Cb_VenderSelect_Mode.Visible = True
         Else
             Cb_vender_vdmode.Visible = False
             Bt_Select_Vender.Visible = False
@@ -653,17 +709,27 @@ Public Class Form3
             Bt_Fillter.Visible = True
             Lb_Mode.Visible = True
             Cb_Mode.Visible = True
+
+            Lb_Mode1.Visible = False
+            Cb_VenderSelect_Mode.Visible = False
         End If
 
 
     End Sub
 
-    Private Sub Bt_Select_Vender_Click(sender As Object, e As EventArgs) Handles Bt_Select_Vender.Click
+    Private Sub Bt_Select_Vender_Click(sender As Object, e As EventArgs) Handles Cb_VenderSelect_Mode.SelectionChangeCommitted, Bt_Select_Vender.Click, Cb_vender_vdmode.SelectionChangeCommitted
         Dim VenderNo As String = Cb_vender_vdmode.SelectedValue
         'MessageBox.Show(VenderNo)
-        Select_Vender_Select(VenderNo)
+
+        If Cb_VenderSelect_Mode.SelectedItem = "Prepare for Redundancy" Then
+            Select_Vender_Select(VenderNo)
+        ElseIf Cb_VenderSelect_Mode.SelectedItem = "Allow for Redundancy" Then
+            Select_Vender_Select1(VenderNo)
+        End If
+
         Prepare_DataGrid1()
         Show_Row_No()
         Cb_Vender.Visible = True
     End Sub
+
 End Class
