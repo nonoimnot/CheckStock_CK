@@ -354,10 +354,10 @@ Public Class Form3
                             "and Itemcode not in (select ItemCode from order_spare_parts where OrderStatusNo = '01' or OrderStatusNo = '02')" &
                             "and w1_qty + w2_qty + w3_qty >= stockqty - @offValue"
 
-        Dim sql2 As String = "select ItemCode,ItemDesc,w1_qty,w2_qty,w3_qty,stockqty,'0' as Qty from salesum_update " &
-                            "where (ItemCode in  (SELECT ItemCode FROM test_db.order_spare_parts where VenderNo = @VenderNo group by ItemCode) )" &
-                            "and Itemcode not in (select ItemCode from order_spare_parts where OrderStatusNo = '01' or OrderStatusNo = '02')" &
-                            "and stockqty < 1"
+        Dim sql2 As String = "select code,name1,'0','0','0',qty,'0' as Qty from item " &
+                            "where (code in  (SELECT ItemCode FROM test_db.order_spare_parts where VenderNo = @VenderNo group by ItemCode) )" &
+                            "and code not in (select ItemCode from order_spare_parts where OrderStatusNo = '01' or OrderStatusNo = '02')" &
+                            "and qty < 1"
 
         Dim stm As String = sql1 & " Union " & sql2 & " order by ItemDesc"
 
@@ -640,6 +640,8 @@ Public Class Form3
             Lb_fillter.Visible = False
             tb_search.Visible = False
             Bt_Fillter.Visible = False
+            Lb_Mode.Visible = False
+            Cb_Mode.Visible = False
         Else
             Cb_vender_vdmode.Visible = False
             Bt_Select_Vender.Visible = False
@@ -649,6 +651,8 @@ Public Class Form3
             Lb_fillter.Visible = True
             tb_search.Visible = True
             Bt_Fillter.Visible = True
+            Lb_Mode.Visible = True
+            Cb_Mode.Visible = True
         End If
 
 
@@ -656,7 +660,7 @@ Public Class Form3
 
     Private Sub Bt_Select_Vender_Click(sender As Object, e As EventArgs) Handles Bt_Select_Vender.Click
         Dim VenderNo As String = Cb_vender_vdmode.SelectedValue
-        MessageBox.Show(VenderNo)
+        'MessageBox.Show(VenderNo)
         Select_Vender_Select(VenderNo)
         Prepare_DataGrid1()
         Show_Row_No()
